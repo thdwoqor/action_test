@@ -1,6 +1,7 @@
 import inspect
 import os
 import re
+import sys
 
 import uvicorn
 from dotenv import load_dotenv
@@ -13,15 +14,20 @@ from fastapi_jwt_auth.exceptions import AuthJWTException
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
 
+# https://nuggy875.tistory.com/106
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+load_dotenv(verbose=True)
+
 from mtl_accounts.database.conn import db
 from mtl_accounts.middlewares.trusted_hosts import TrustedHostMiddleware
 from mtl_accounts.routes import auth, users
 
-load_dotenv(verbose=True)
-
 
 def create_app():
     app = FastAPI()
+
+    db.init_app(app)
 
     app.add_middleware(
         CORSMiddleware,
@@ -109,4 +115,3 @@ app = create_app()
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
-    db.init_app(app)

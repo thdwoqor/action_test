@@ -19,19 +19,3 @@ def app():
 def session():
     db = create_engine(DATABASE)
     return scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=db))
-
-
-@pytest.fixture(scope="session")
-def user():
-    fake = Faker("ko_KR")
-    return {
-        "jti": "11111111-1111-1111-1111-111111111111",
-        "type": "access",
-        "fresh": "false",
-        "displayName": fake.name(),
-        "givenName": "null",
-        "jobTitle": fake.job(),
-        "mail": fake.email(),
-        "provider": "office365",
-        "role": "default",
-    }
