@@ -30,9 +30,11 @@ jobs:
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     
-    - name: Create .env
+    - name: Create .env file
       run: |
-        echo ${{ secrets.DOTENV }} > .env
+        jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$SECRETS_CONTEXT" > .env
+      env:
+        SECRETS_CONTEXT: ${{ toJson(secrets) }}
 
     - name: Test with pytest
       run: |
