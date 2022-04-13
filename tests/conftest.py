@@ -3,9 +3,6 @@ import sys
 
 import pytest
 from faker import Faker
-
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-
 from mtl_accounts.main import create_app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
