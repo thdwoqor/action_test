@@ -19,7 +19,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 load_dotenv(verbose=True)
 
-from mtl_accounts.database.conn import db
+# from mtl_accounts.database.conn import db
 from mtl_accounts.middlewares.trusted_hosts import TrustedHostMiddleware
 from mtl_accounts.routes import auth, users
 
@@ -27,7 +27,7 @@ from mtl_accounts.routes import auth, users
 def create_app():
     app = FastAPI()
 
-    db.init_app(app)
+    # db.init_app(app)
 
     app.add_middleware(
         CORSMiddleware,
