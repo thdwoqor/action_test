@@ -29,7 +29,26 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        
+    
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        OAUTHLIB_INSECURE_TRANSPORT: ${{ secrets.OAUTHLIB_INSECURE_TRANSPORT }}
+        MY_CLIENT_ID: ${{ secrets.MY_CLIENT_ID }}
+        MY_CLIENT_SECRET: ${{ secrets.MY_CLIENT_SECRET }}
+        MY_CLIENT_TENANT: ${{ secrets.MY_CLIENT_TENANT }}
+        REDIRECT_URL: ${{ secrets.REDIRECT_URL }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        ALGORITHM: ${{ secrets.ALGORITHM }}
+        POSTGRESQL_USER: ${{ secrets.POSTGRESQL_USER }}
+        POSTGRESQL_PASSWORD: ${{ secrets.POSTGRESQL_PASSWORD }}
+        POSTGRESQL_HOST: ${{ secrets.POSTGRESQL_HOST }}
+        POSTGRESQL_PORT: ${{ secrets.POSTGRESQL_PORT }}
+        POSTGRESQL_DATABASE: ${{ secrets.POSTGRESQL_DATABASE }}
+        REDIS_HOST: ${{ secrets.REDIS_HOST }}
+        REDIS_PORT: ${{ secrets.REDIS_PORT }}
+        REDIS_DATABASE: ${{ secrets.REDIS_DATABASE }}
+
     - name: Test with pytest
       run: |
         python -m pytest -s
